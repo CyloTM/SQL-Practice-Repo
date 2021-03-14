@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import com.example.sql_first_try.adapters.NotesRecyclerAdapter;
 import com.example.sql_first_try.models.Note;
+import com.example.sql_first_try.util.VerticalSpacingItemDecorator;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -22,7 +23,7 @@ import android.widget.EditText;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class NotesListActivity extends AppCompatActivity {
 
     public final static String TAG = "MainActivity";
 
@@ -77,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
     private void initRecyclerView(){
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(linearLayoutManager);
+        VerticalSpacingItemDecorator itemDecorator = new VerticalSpacingItemDecorator(10);
+        mRecyclerView.addItemDecoration(itemDecorator);
         mNotesRecyclerAdapter = new NotesRecyclerAdapter(mNotes);
         mRecyclerView.setAdapter(mNotesRecyclerAdapter);
 

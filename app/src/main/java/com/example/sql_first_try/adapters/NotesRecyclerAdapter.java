@@ -15,13 +15,13 @@ import java.util.ArrayList;
 
 public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerAdapter.ViewHolder> {
 
-    private ArrayList <Note> mNotes = new ArrayList();
+    private ArrayList <Note> mNotes;
 
     public NotesRecyclerAdapter(ArrayList<Note> notes) {
         mNotes = notes;
     }
 
-    //Over ride methods for RecyclerView Adapter
+    // Needed Override methods for RecyclerView Adapter
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
