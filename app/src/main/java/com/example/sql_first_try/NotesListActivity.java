@@ -34,6 +34,7 @@ public class NotesListActivity extends AppCompatActivity {
     private Button mButtonViewData;
     private RecyclerView mRecyclerView;
 
+
     // Variables
     private ArrayList <Note> mNotes = new ArrayList();
     private NotesRecyclerAdapter mNotesRecyclerAdapter;
@@ -60,7 +61,8 @@ public class NotesListActivity extends AppCompatActivity {
         initRecyclerView();
         insertFakeNotes();
 
-
+        setSupportActionBar(findViewById(R.id.notes_toolbar));
+        setTitle("Notes");
     }
 
     public void insertFakeNotes(){
