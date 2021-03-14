@@ -5,33 +5,21 @@ import android.os.Bundle;
 import com.example.sql_first_try.adapters.NotesRecyclerAdapter;
 import com.example.sql_first_try.models.Note;
 import com.example.sql_first_try.util.VerticalSpacingItemDecorator;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
-import android.view.View;
-
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.EditText;
 
 import java.util.ArrayList;
 
-public class NotesListActivity extends AppCompatActivity {
+public class NotesListActivity extends AppCompatActivity implements NotesRecyclerAdapter.OnNoteListener {
 
     public final static String TAG = "MainActivity";
 
 
     // Ui components
-    private EditText mEditTextName;
-    private Button mButtonAdd;
-    private Button mButtonViewData;
     private RecyclerView mRecyclerView;
 
 
@@ -42,7 +30,7 @@ public class NotesListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_notes_list);
 
         mRecyclerView = findViewById(R.id.recycler_view);
 
@@ -82,10 +70,17 @@ public class NotesListActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(linearLayoutManager);
         VerticalSpacingItemDecorator itemDecorator = new VerticalSpacingItemDecorator(10);
         mRecyclerView.addItemDecoration(itemDecorator);
-        mNotesRecyclerAdapter = new NotesRecyclerAdapter(mNotes);
+        mNotesRecyclerAdapter = new NotesRecyclerAdapter(mNotes, this);
         mRecyclerView.setAdapter(mNotesRecyclerAdapter);
 
     }
 
 
+    @Override
+    public void onNoteClicked(int position) {
+        Log.d(TAG, "Note " + mNotes.get(position) + " has been clicked");
+
+//        Intent intent = new Intent(this, NewActivity.java);
+//        startActivity(intent);
+    }
 }
