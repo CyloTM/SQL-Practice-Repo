@@ -22,4 +22,7 @@ public class NoteActivity extends AppCompatActivity {
             setTitle(note.getTitle());
         }
     }
+
+    //View State
+    //Edit State
 }
