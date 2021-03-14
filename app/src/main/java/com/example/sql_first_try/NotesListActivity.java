@@ -78,7 +78,7 @@ public class NotesListActivity extends AppCompatActivity implements NotesRecycle
 
     @Override
     public void onNoteClicked(int position) {
-        Log.d(TAG, "Note " + mNotes.get(position) + " has been clicked");
+        Log.d(TAG, "Note " + position + " has been clicked");
 
 //        Intent intent = new Intent(this, NewActivity.java);
 //        startActivity(intent);
