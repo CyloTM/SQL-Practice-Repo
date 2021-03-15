@@ -12,10 +12,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
+import android.view.View;
 
 import java.util.ArrayList;
 
-public class NotesListActivity extends AppCompatActivity implements NotesRecyclerAdapter.OnNoteListener {
+public class NotesListActivity extends AppCompatActivity implements
+        NotesRecyclerAdapter.OnNoteListener,
+        View.OnClickListener
+{
 
     public final static String TAG = "NotesListActivity";
 
@@ -34,18 +38,7 @@ public class NotesListActivity extends AppCompatActivity implements NotesRecycle
         setContentView(R.layout.activity_notes_list);
 
         mRecyclerView = findViewById(R.id.recycler_view);
-
-
-
-        Note note = new Note("some title","some content","timestamp");
-
-        Note note2 = new Note();
-        note2.setContent("some other content");
-        note2.setTitle("some other Title");
-        note2.setTimestamp("some timestamp");
-
-
-        Log.d(TAG, "onCreate my note" + note.toString());
+        findViewById(R.id.fab).setOnClickListener(this);
 
         initRecyclerView();
         insertFakeNotes();
@@ -82,6 +75,12 @@ public class NotesListActivity extends AppCompatActivity implements NotesRecycle
         Log.d(TAG, "Note " + position + " has been clicked");
         Intent intent = new Intent(this, NoteActivity.class);
         intent.putExtra("selected_note", mNotes.get(position));
+        startActivity(intent);
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(this, NoteActivity.class);
         startActivity(intent);
     }
 }
