@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -22,7 +24,8 @@ public class NoteActivity extends AppCompatActivity implements
         View.OnTouchListener,
         GestureDetector.OnGestureListener,
         GestureDetector.OnDoubleTapListener,
-        View.OnClickListener
+        View.OnClickListener,
+        TextWatcher
 {
 
     private static final String TAG = "NoteActivity";
@@ -85,7 +88,6 @@ public class NoteActivity extends AppCompatActivity implements
 
     private void saveNewNote(){
         mNoteRepository.insertNoteTask(mFinalNote);
-
     }
 
     private void setNoteProperties(){
@@ -140,8 +142,6 @@ public class NoteActivity extends AppCompatActivity implements
                 saveChanges();
             }
         }
-        saveChanges();
-
     }
 
     private void disableContentInteraction(){
@@ -177,6 +177,7 @@ public class NoteActivity extends AppCompatActivity implements
         mTextViewTitle.setOnClickListener(this);
         mToolbarCheck.setOnClickListener(this);
         mToolbarBack.setOnClickListener(this);
+        mEditTextTitle.addTextChangedListener(this);
     }
 
     private boolean getIncomingIntent(){
@@ -303,5 +304,20 @@ public class NoteActivity extends AppCompatActivity implements
         if(mMode == EDIT_MODE_ENABLED){
             enableEditMode();
         }
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        mEditTextTitle.setText(s.toString());
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
     }
 }
