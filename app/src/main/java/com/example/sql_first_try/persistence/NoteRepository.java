@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 
 import com.example.sql_first_try.async.DeleteAsyncTask;
 import com.example.sql_first_try.async.InsertAsyncTask;
+import com.example.sql_first_try.async.UpdateAsyncTask;
 import com.example.sql_first_try.models.Note;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class NoteRepository {
     }
 
     public void updateNote(Note note){
+        new UpdateAsyncTask(mNoteDatabase.getNoteDao()).execute(note);
 
     }
 
