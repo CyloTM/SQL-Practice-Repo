@@ -313,7 +313,7 @@ public class NoteActivity extends AppCompatActivity implements
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        mEditTextTitle.setText(s.toString());
+        mTextViewTitle.setText(s.toString());
     }
 
     @Override
