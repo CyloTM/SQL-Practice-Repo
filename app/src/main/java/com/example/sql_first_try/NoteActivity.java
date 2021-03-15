@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.sql_first_try.models.Note;
+import com.example.sql_first_try.persistence.NoteRepository;
 
 public class NoteActivity extends AppCompatActivity implements
         View.OnTouchListener,
@@ -24,13 +25,9 @@ public class NoteActivity extends AppCompatActivity implements
         View.OnClickListener
 {
 
-
-
     private static final String TAG = "NoteActivity";
     private static final int EDIT_MODE_ENABLED = 1;
     private static final int EDIT_MODE_DISABLED = 0;
-
-
 
     //Ui Components
     private LineEditText mLineEditText;
@@ -44,6 +41,7 @@ public class NoteActivity extends AppCompatActivity implements
     private Note mInitialNote;
     private GestureDetector mGestureDetector;
     private int mMode;
+    private NoteRepository mNoteRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +55,7 @@ public class NoteActivity extends AppCompatActivity implements
         mRelativeLayoutCheckContainer = findViewById(R.id.check_container);
         mToolbarCheck = findViewById(R.id.toolbar_check);
         mToolbarBack = findViewById(R.id.toolbar_back_arrow);
+        mNoteRepository = new NoteRepository(this);
 
 
         getSupportActionBar().hide();
@@ -75,6 +74,16 @@ public class NoteActivity extends AppCompatActivity implements
         }
 
         setListener();
+    }
+
+    private void saveChanges(){
+        if(mIsNewNote){
+            saveNewNote();
+        }else{}
+    }
+
+    private void saveNewNote(){
+        mNoteRepository.insertNoteTask(mInitialNote);
     }
 
     private void enableEditMode(){
@@ -98,6 +107,7 @@ public class NoteActivity extends AppCompatActivity implements
 
         mMode = EDIT_MODE_DISABLED;
         disableContentInteraction();
+        saveChanges();
 
     }
 
