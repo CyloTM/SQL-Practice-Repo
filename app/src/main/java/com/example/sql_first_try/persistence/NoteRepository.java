@@ -4,6 +4,7 @@ import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 
+import com.example.sql_first_try.async.DeleteAsyncTask;
 import com.example.sql_first_try.async.InsertAsyncTask;
 import com.example.sql_first_try.models.Note;
 
@@ -31,6 +32,7 @@ public class NoteRepository {
     }
 
     public void deleteNote(Note note){
+        new DeleteAsyncTask(mNoteDatabase.getNoteDao()).execute(note);
 
     }
 }
