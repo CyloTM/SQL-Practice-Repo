@@ -39,6 +39,7 @@ public class NoteActivity extends AppCompatActivity implements
     //Vars
     private boolean mIsNewNote;
     private Note mInitialNote;
+    private Note mFinalNote;
     private GestureDetector mGestureDetector;
     private int mMode;
     private NoteRepository mNoteRepository;
@@ -83,7 +84,24 @@ public class NoteActivity extends AppCompatActivity implements
     }
 
     private void saveNewNote(){
-        mNoteRepository.insertNoteTask(mInitialNote);
+        mNoteRepository.insertNoteTask(mFinalNote);
+
+    }
+
+    private void setNoteProperties(){
+        mEditTextTitle.setText(mInitialNote.getTitle());
+        mTextViewTitle.setText(mInitialNote.getTitle());
+        mLineEditText.setText(mInitialNote.getContent());
+    }
+
+    private void setNewNoteProperties(){
+        mEditTextTitle.setText("Note Title");
+        mTextViewTitle.setText("Note Title");
+
+        mInitialNote = new Note();
+        mFinalNote = new Note();
+        mInitialNote.setTitle("Note Title");
+        mFinalNote.setTitle("Note Title");
     }
 
     private void enableEditMode(){
@@ -107,6 +125,21 @@ public class NoteActivity extends AppCompatActivity implements
 
         mMode = EDIT_MODE_DISABLED;
         disableContentInteraction();
+
+        String temp = mLineEditText.getText().toString();
+        temp.replace("\n","");
+        temp.replace("","");
+        if(temp.length()>0){
+            mFinalNote.setTitle(mEditTextTitle.getText().toString());
+            mFinalNote.setContent(mLineEditText.getText().toString());
+            String timestamp = "Mar 2021";
+            mFinalNote.setTimestamp(timestamp);
+
+            if(!mFinalNote.getContent().equals(mInitialNote.getContent())
+                    ||!mFinalNote.getTitle().equals(mInitialNote.getTitle())){
+                saveChanges();
+            }
+        }
         saveChanges();
 
     }
@@ -149,6 +182,7 @@ public class NoteActivity extends AppCompatActivity implements
     private boolean getIncomingIntent(){
         if(getIntent().hasExtra("selected_note")){
             mInitialNote = getIntent().getParcelableExtra("selected_note");
+            mFinalNote = getIntent().getParcelableExtra("selected_note");
             Log.d(TAG, "getIncomingIntent: " + mInitialNote.toString());
             mIsNewNote = false;
             mMode = EDIT_MODE_DISABLED;
@@ -162,16 +196,7 @@ public class NoteActivity extends AppCompatActivity implements
 
 
 
-    private void setNoteProperties(){
-        mEditTextTitle.setText(mInitialNote.getTitle());
-        mTextViewTitle.setText(mInitialNote.getTitle());
-        mLineEditText.setText(mInitialNote.getContent());
-    }
 
-    private void setNewNoteProperties(){
-        mEditTextTitle.setText("Note Title");
-        mTextViewTitle.setText("Note Title");
-    }
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
