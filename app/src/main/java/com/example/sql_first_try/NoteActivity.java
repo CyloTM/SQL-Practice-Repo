@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.example.sql_first_try.models.Note;
 import com.example.sql_first_try.persistence.NoteRepository;
+import com.example.sql_first_try.util.Utility;
 
 public class NoteActivity extends AppCompatActivity implements
         View.OnTouchListener,
@@ -134,7 +135,7 @@ public class NoteActivity extends AppCompatActivity implements
         if(temp.length()>0){
             mFinalNote.setTitle(mEditTextTitle.getText().toString());
             mFinalNote.setContent(mLineEditText.getText().toString());
-            String timestamp = "Mar 2021";
+            String timestamp = Utility.getCurrentTimeStamp();
             mFinalNote.setTimestamp(timestamp);
 
             if(!mFinalNote.getContent().equals(mInitialNote.getContent())

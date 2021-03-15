@@ -1,5 +1,6 @@
 package com.example.sql_first_try.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +11,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sql_first_try.R;
 import com.example.sql_first_try.models.Note;
+import com.example.sql_first_try.util.Utility;
 
 import java.util.ArrayList;
 
 public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerAdapter.ViewHolder> {
+
+    private static final String TAG = "NotesRecyclerAdapter";
 
     private ArrayList <Note> mNotes;
 
@@ -36,8 +40,17 @@ public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int i) {
-        holder.timestamp.setText(mNotes.get(i).getTimestamp());
-        holder.title.setText(mNotes.get(i).getTitle());
+
+        try{
+            String month = mNotes.get(i).getTimestamp().substring(0,2);
+            month = Utility.getMonthFromNumber(month);
+            String year = mNotes.get(i).getTimestamp().substring(3);
+            String timestamp = month + " " + year;
+            holder.timestamp.setText(timestamp);
+            holder.title.setText(mNotes.get(i).getTitle());
+        }catch(NullPointerException e){
+            Log.e(TAG,"onBindViewHolder: NullPointerException: " + e.getMessage());
+        }
     }
 
     @Override
