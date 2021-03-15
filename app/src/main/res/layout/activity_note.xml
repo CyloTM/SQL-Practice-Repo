@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,12 +7,30 @@
     android:orientation="vertical"
     tools:context=".NoteActivity">
 
-    <EditText
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/notes_toolbar_container">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/notes_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary">
+
+            <include layout="@layout/layout_note_toolbar"/>
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <com.example.sql_first_try.LineEditText
+        android:layout_below="@id/notes_toolbar_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/edit_text_note"
-        android:textSize="23dp"
+        android:textSize="23sp"
         android:padding="5dp"
-        android:textColor="@color/black" />
+        android:textColor="@color/black"
+        android:gravity="top"/>
 
-</LinearLayout>
+</RelativeLayout>
