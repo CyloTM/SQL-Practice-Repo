@@ -1,5 +1,6 @@
 package com.example.sql_first_try;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -250,6 +251,22 @@ public class NoteActivity extends AppCompatActivity implements
         }
         else{
             super.onBackPressed();
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("mode", mMode);
+
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mMode = savedInstanceState.getInt("mode");
+        if(mMode == EDIT_MODE_ENABLED){
+            enableEditMode();
         }
     }
 }
