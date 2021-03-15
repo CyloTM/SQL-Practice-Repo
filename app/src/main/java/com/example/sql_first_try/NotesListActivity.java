@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class NotesListActivity extends AppCompatActivity implements NotesRecyclerAdapter.OnNoteListener {
 
-    public final static String TAG = "MainActivity";
+    public final static String TAG = "NotesListActivity";
 
 
     // Ui components
