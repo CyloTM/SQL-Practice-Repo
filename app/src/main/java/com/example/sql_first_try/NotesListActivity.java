@@ -7,7 +7,9 @@ import com.example.sql_first_try.adapters.NotesRecyclerAdapter;
 import com.example.sql_first_try.models.Note;
 import com.example.sql_first_try.util.VerticalSpacingItemDecorator;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -47,6 +49,17 @@ public class NotesListActivity extends AppCompatActivity implements
         setTitle("Notes");
     }
 
+    private void initRecyclerView(){
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
+        VerticalSpacingItemDecorator itemDecorator = new VerticalSpacingItemDecorator(10);
+        mRecyclerView.addItemDecoration(itemDecorator);
+        new ItemTouchHelper(itemTouchHelperCallBack).attachToRecyclerView(mRecyclerView);
+        mNotesRecyclerAdapter = new NotesRecyclerAdapter(mNotes, this);
+        mRecyclerView.setAdapter(mNotesRecyclerAdapter);
+
+    }
+
     public void insertFakeNotes(){
         for(int i = 0;i<1000; i++){
 
@@ -59,16 +72,12 @@ public class NotesListActivity extends AppCompatActivity implements
         mNotesRecyclerAdapter.notifyDataSetChanged();
     }
 
-    private void initRecyclerView(){
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(linearLayoutManager);
-        VerticalSpacingItemDecorator itemDecorator = new VerticalSpacingItemDecorator(10);
-        mRecyclerView.addItemDecoration(itemDecorator);
-        mNotesRecyclerAdapter = new NotesRecyclerAdapter(mNotes, this);
-        mRecyclerView.setAdapter(mNotesRecyclerAdapter);
 
+
+    private void deleteNote(Note note){
+        mNotes.remove(note);
+        mNotesRecyclerAdapter.notifyDataSetChanged();
     }
-
 
     @Override
     public void onNoteClicked(int position) {
@@ -83,4 +92,17 @@ public class NotesListActivity extends AppCompatActivity implements
         Intent intent = new Intent(this, NoteActivity.class);
         startActivity(intent);
     }
+
+    private ItemTouchHelper.SimpleCallback itemTouchHelperCallBack = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT){
+
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+            deleteNote(mNotes.get(viewHolder.getAdapterPosition()));
+        }
+    };
 }
