@@ -36,7 +36,7 @@ public class NoteActivity extends AppCompatActivity implements
     private EditText mEditTextTitle;
     private TextView mTextViewTitle;
     private RelativeLayout mRelativeLayoutCheckContainer, mRelativeLayoutBackContainer;
-    private ImageButton mToolbarCheck, mImageButtonBack;
+    private ImageButton mToolbarCheck, mToolbarBack;
 
     //Vars
     private boolean mIsNewNote;
@@ -55,7 +55,7 @@ public class NoteActivity extends AppCompatActivity implements
         mRelativeLayoutBackContainer = findViewById(R.id.back_arrow_container);
         mRelativeLayoutCheckContainer = findViewById(R.id.check_container);
         mToolbarCheck = findViewById(R.id.toolbar_check);
-        mImageButtonBack = findViewById(R.id.toolbar_back_arrow);
+        mToolbarBack = findViewById(R.id.toolbar_back_arrow);
 
 
         getSupportActionBar().hide();
@@ -118,11 +118,21 @@ public class NoteActivity extends AppCompatActivity implements
 
     }
 
+    private void hideSoftKeyboard(){
+        InputMethodManager imm = (InputMethodManager) this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        View view = this.getCurrentFocus();
+        if (view == null){
+            view = new View(this);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
     private void setListener(){
         mLineEditText.setOnTouchListener(this);
         mGestureDetector = new GestureDetector(this,this);
         mTextViewTitle.setOnClickListener(this);
         mToolbarCheck.setOnClickListener(this);
+        mToolbarBack.setOnClickListener(this);
     }
 
     private boolean getIncomingIntent(){
@@ -138,14 +148,7 @@ public class NoteActivity extends AppCompatActivity implements
         return true;
     }
 
-    private void hideSoftKeyboard(){
-        InputMethodManager imm = (InputMethodManager) this.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        View view = this.getCurrentFocus();
-        if (view == null){
-            view = new View(this);
-        }
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
+
 
 
     private void setNoteProperties(){
@@ -217,8 +220,8 @@ public class NoteActivity extends AppCompatActivity implements
         switch(v.getId()){
 
             case R.id.toolbar_check:{
-                disableEditMode();
                 hideSoftKeyboard();
+                disableEditMode();
                 break;
             }
 
@@ -227,6 +230,11 @@ public class NoteActivity extends AppCompatActivity implements
                 mEditTextTitle.requestFocus();
                 //Sets cursor at end of string
                 mEditTextTitle.setSelection(mEditTextTitle.length());
+                break;
+            }
+
+            case R.id.toolbar_back_arrow:{
+                finish();
                 break;
             }
 
