@@ -84,7 +84,9 @@ public class NoteActivity extends AppCompatActivity implements
     private void saveChanges(){
         if(mIsNewNote){
             saveNewNote();
-        }else{updateNote();}
+        }else{
+            updateNote();
+        }
     }
 
     private void saveNewNote(){
@@ -131,6 +133,7 @@ public class NoteActivity extends AppCompatActivity implements
         mEditTextTitle.setVisibility(View.GONE);
 
         mMode = EDIT_MODE_DISABLED;
+
         disableContentInteraction();
 
         String temp = mLineEditText.getText().toString();
@@ -143,7 +146,8 @@ public class NoteActivity extends AppCompatActivity implements
             mFinalNote.setTimestamp(timestamp);
 
             if(!mFinalNote.getContent().equals(mInitialNote.getContent())
-                    ||!mFinalNote.getTitle().equals(mInitialNote.getTitle())){
+                    || !mFinalNote.getTitle().equals(mInitialNote.getTitle())){
+                Log.d(TAG, "disableEditMode: called");
                 saveChanges();
             }
         }
@@ -193,6 +197,7 @@ public class NoteActivity extends AppCompatActivity implements
             mFinalNote.setTitle(mInitialNote.getTitle());
             mFinalNote.setContent(mInitialNote.getContent());
             mFinalNote.setTimestamp(mInitialNote.getTimestamp());
+            mFinalNote.setId(mInitialNote.getId());
 
             Log.d(TAG, "getIncomingIntent: " + mInitialNote.toString());
             mIsNewNote = false;
